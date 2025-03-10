@@ -1,22 +1,78 @@
 <!DOCTYPE html>
-<html lang="ur">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mobile Recharge</title>
+    <title>EasyPaisa Clone</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; }
-        .btn { background: blue; color: white; padding: 10px; border: none; cursor: pointer; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background-color: #f4f4f4; text-align: center; padding: 20px; }
+        .container { width: 100%; max-width: 400px; background: white; padding: 20px; margin: auto; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+        h2 { color: #007bff; }
+        .balance { font-size: 24px; margin: 20px 0; font-weight: bold; }
+        .btn { display: block; width: 100%; padding: 10px; margin: 10px 0; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        .btn:hover { background: #0056b3; }
+        input { width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ddd; border-radius: 5px; }
     </style>
 </head>
 <body>
-    <h1>پاکستانی سمز کے لیے موبائل ریچارج</h1>
-    <button class="btn" onclick="recharge()">ابھی ریچارج کریں</button>
+
+    <div class="container">
+        <h2>EasyPaisa Clone</h2>
+        <div class="balance">Balance: Rs <span id="balance">5000</span></div>
+
+        <h3>Send Money</h3>
+        <input type="number" id="phone" placeholder="Enter Phone Number">
+        <input type="number" id="amount" placeholder="Enter Amount">
+        <button class="btn" onclick="sendMoney()">Send Money</button>
+
+        <h3>Mobile Recharge</h3>
+        <input type="number" id="recharge-phone" placeholder="Enter Phone Number">
+        <input type="number" id="recharge-amount" placeholder="Enter Amount">
+        <button class="btn" onclick="mobileRecharge()">Recharge</button>
+    </div>
 
     <script>
-        function recharge() {
-            alert("ریچارج سسٹم جلد آ رہا ہے!");
+        let balance = 5000;
+
+        function sendMoney() {
+            let phone = document.getElementById("phone").value;
+            let amount = document.getElementById("amount").value;
+
+            if (phone.length !== 11 || amount <= 0) {
+                alert("Invalid Phone Number or Amount!");
+                return;
+            }
+
+            if (amount > balance) {
+                alert("Insufficient Balance!");
+                return;
+            }
+
+            balance -= amount;
+            document.getElementById("balance").innerText = balance;
+            alert(`Rs ${amount} sent to ${phone}`);
+        }
+
+        function mobileRecharge() {
+            let phone = document.getElementById("recharge-phone").value;
+            let amount = document.getElementById("recharge-amount").value;
+
+            if (phone.length !== 11 || amount <= 0) {
+                alert("Invalid Phone Number or Amount!");
+                return;
+            }
+
+            if (amount > balance) {
+                alert("Insufficient Balance!");
+                return;
+            }
+
+            balance -= amount;
+            document.getElementById("balance").innerText = balance;
+            alert(`Recharge of Rs ${amount} done for ${phone}`);
         }
     </script>
+
 </body>
 </html>
