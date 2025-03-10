@@ -12,7 +12,8 @@
         .balance { font-size: 24px; margin: 20px 0; font-weight: bold; }
         .btn { display: block; width: 100%; padding: 10px; margin: 10px 0; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
         .btn:hover { background: #0056b3; }
-        input { width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        input, select { width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        .history { text-align: left; margin-top: 20px; font-size: 14px; }
     </style>
 </head>
 <body>
@@ -30,10 +31,35 @@
         <input type="number" id="recharge-phone" placeholder="Enter Phone Number">
         <input type="number" id="recharge-amount" placeholder="Enter Amount">
         <button class="btn" onclick="mobileRecharge()">Recharge</button>
+
+        <h3>Bill Payments</h3>
+        <select id="bill-type">
+            <option value="Electricity">Electricity</option>
+            <option value="Gas">Gas</option>
+            <option value="Water">Water</option>
+            <option value="Internet">Internet</option>
+        </select>
+        <input type="number" id="bill-amount" placeholder="Enter Bill Amount">
+        <button class="btn" onclick="payBill()">Pay Bill</button>
+
+        <h3>QR Code Payment</h3>
+        <input type="text" id="qr-code" placeholder="Enter QR Code Data">
+        <button class="btn" onclick="payQR()">Pay via QR Code</button>
+
+        <h3>Transaction History</h3>
+        <div class="history" id="history">
+            <p>No transactions yet.</p>
+        </div>
     </div>
 
     <script>
         let balance = 5000;
+        let history = [];
+
+        function updateHistory(transaction) {
+            history.unshift(transaction);
+            document.getElementById("history").innerHTML = history.map(t => `<p>${t}</p>`).join('');
+        }
 
         function sendMoney() {
             let phone = document.getElementById("phone").value;
@@ -51,7 +77,9 @@
 
             balance -= amount;
             document.getElementById("balance").innerText = balance;
-            alert(`Rs ${amount} sent to ${phone}`);
+            let transaction = `Sent Rs ${amount} to ${phone}`;
+            updateHistory(transaction);
+            alert(transaction);
         }
 
         function mobileRecharge() {
@@ -70,7 +98,51 @@
 
             balance -= amount;
             document.getElementById("balance").innerText = balance;
-            alert(`Recharge of Rs ${amount} done for ${phone}`);
+            let transaction = `Recharged Rs ${amount} for ${phone}`;
+            updateHistory(transaction);
+            alert(transaction);
+        }
+
+        function payBill() {
+            let billType = document.getElementById("bill-type").value;
+            let amount = document.getElementById("bill-amount").value;
+
+            if (amount <= 0) {
+                alert("Invalid Bill Amount!");
+                return;
+            }
+
+            if (amount > balance) {
+                alert("Insufficient Balance!");
+                return;
+            }
+
+            balance -= amount;
+            document.getElementById("balance").innerText = balance;
+            let transaction = `Paid Rs ${amount} for ${billType} Bill`;
+            updateHistory(transaction);
+            alert(transaction);
+        }
+
+        function payQR() {
+            let qrData = document.getElementById("qr-code").value;
+
+            if (!qrData) {
+                alert("Invalid QR Code!");
+                return;
+            }
+
+            let amount = Math.floor(Math.random() * 1000) + 1; // Example amount
+            if (amount > balance) {
+                alert("Insufficient Balance!");
+                return;
+            }
+
+            balance -= amount;
+            document.getElementById("balance").innerText = balance;
+            let transaction = `Paid Rs ${amount} via QR Code: ${qrData}`;
+            updateHistory(transaction);
+            alert(transaction);
         }
     </script>
 
