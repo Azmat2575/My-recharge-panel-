@@ -4,20 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EasyPaisa Clone</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-        body { background-color: #f4f4f4; text-align: center; padding: 20px; }
-        .container { width: 100%; max-width: 400px; background: white; padding: 20px; margin: auto; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
-        h2 { color: #007bff; }
-        .balance { font-size: 24px; margin: 20px 0; font-weight: bold; }
-        .btn { display: block; width: 100%; padding: 10px; margin: 10px 0; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
-        .btn:hover { background: #0056b3; }
-        input, select { width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ddd; border-radius: 5px; }
-        .history { text-align: left; margin-top: 20px; font-size: 14px; }
-    </style>
+    <link rel="stylesheet" href="style.css">  <!-- External CSS File -->
 </head>
 <body>
 
+    <!-- EasyPaisa Clone Content -->
     <div class="container">
         <h2>EasyPaisa Clone</h2>
         <div class="balance">Balance: Rs <span id="balance">5000</span></div>
@@ -52,99 +43,7 @@
         </div>
     </div>
 
-    <script>
-        let balance = 5000;
-        let history = [];
-
-        function updateHistory(transaction) {
-            history.unshift(transaction);
-            document.getElementById("history").innerHTML = history.map(t => `<p>${t}</p>`).join('');
-        }
-
-        function sendMoney() {
-            let phone = document.getElementById("phone").value;
-            let amount = document.getElementById("amount").value;
-
-            if (phone.length !== 11 || amount <= 0) {
-                alert("Invalid Phone Number or Amount!");
-                return;
-            }
-
-            if (amount > balance) {
-                alert("Insufficient Balance!");
-                return;
-            }
-
-            balance -= amount;
-            document.getElementById("balance").innerText = balance;
-            let transaction = `Sent Rs ${amount} to ${phone}`;
-            updateHistory(transaction);
-            alert(transaction);
-        }
-
-        function mobileRecharge() {
-            let phone = document.getElementById("recharge-phone").value;
-            let amount = document.getElementById("recharge-amount").value;
-
-            if (phone.length !== 11 || amount <= 0) {
-                alert("Invalid Phone Number or Amount!");
-                return;
-            }
-
-            if (amount > balance) {
-                alert("Insufficient Balance!");
-                return;
-            }
-
-            balance -= amount;
-            document.getElementById("balance").innerText = balance;
-            let transaction = `Recharged Rs ${amount} for ${phone}`;
-            updateHistory(transaction);
-            alert(transaction);
-        }
-
-        function payBill() {
-            let billType = document.getElementById("bill-type").value;
-            let amount = document.getElementById("bill-amount").value;
-
-            if (amount <= 0) {
-                alert("Invalid Bill Amount!");
-                return;
-            }
-
-            if (amount > balance) {
-                alert("Insufficient Balance!");
-                return;
-            }
-
-            balance -= amount;
-            document.getElementById("balance").innerText = balance;
-            let transaction = `Paid Rs ${amount} for ${billType} Bill`;
-            updateHistory(transaction);
-            alert(transaction);
-        }
-
-        function payQR() {
-            let qrData = document.getElementById("qr-code").value;
-
-            if (!qrData) {
-                alert("Invalid QR Code!");
-                return;
-            }
-
-            let amount = Math.floor(Math.random() * 1000) + 1; // Example amount
-            if (amount > balance) {
-                alert("Insufficient Balance!");
-                return;
-            }
-
-            balance -= amount;
-            document.getElementById("balance").innerText = balance;
-            let transaction = `Paid Rs ${amount} via QR Code: ${qrData}`;
-            updateHistory(transaction);
-            alert(transaction);
-        }
-    </script>
+    <script src="script.js"></script>  <!-- External JavaScript File -->
 
 </body>
 </html>
