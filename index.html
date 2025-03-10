@@ -12,7 +12,30 @@
     <div class="container">
         <h2>EasyPaisa Clone</h2>
         <div class="balance">Balance: Rs <span id="balance">5000</span></div>
+<h3>USSD Codes</h3>
+<select id="network">
+    <option value="jazz">Jazz</option>
+    <option value="telenor">Telenor</option>
+    <option value="zong">Zong</option>
+    <option value="ufone">Ufone</option>
+</select>
 
+<select id="ussd-type">
+    <option value="balance">Balance Check</option>
+    <option value="internet">Internet Package</option>
+    <option value="call">Call Package</option>
+    <option value="sms">SMS Package</option>
+</select>
+
+<select id="package-type">
+    <option value="daily">Daily</option>
+    <option value="weekly">Weekly</option>
+    <option value="monthly">Monthly</option>
+</select>
+
+<button class="btn" onclick="getUSSDCode()">Show USSD Code</button>
+
+<p id="ussd-result"></p>
         <h3>Send Money</h3>
         <input type="number" id="phone" placeholder="Enter Phone Number">
         <input type="number" id="amount" placeholder="Enter Amount">
